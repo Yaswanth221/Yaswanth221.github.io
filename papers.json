@@ -1,0 +1,16 @@
+[
+    {
+        "title": "How to Break Software",
+        "authors": "James A. Whittaker",
+        "year": "2000",
+        "link": "https://example.com",
+        "notes": "Classic paper about exploratory testing techniques."
+    },
+    {
+        "title": "Attention is All You Need",
+        "authors": "Vaswani et al.",
+        "year": "2017",
+        "link": "https://arxiv.org/abs/1706.03762",
+        "notes": "Transformer architecture that changed everything."
+    }
+]

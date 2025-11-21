@@ -1,0 +1,80 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header */
+header {
+    text-align: center;
+    padding: 40px 10px;
+    background: #ffffff;
+    border-bottom: 1px solid #ddd;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+header p {
+    color: #444;
+    margin-top: 5px;
+}
+
+/* Grid */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 30px;
+}
+
+/* Paper Card */
+.paper-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    transition: 0.2s ease-in-out;
+}
+
+.paper-card:hover {
+    transform: translateY(-4px);
+}
+
+.paper-card h2 {
+    font-size: 1.2rem;
+    margin-top: 0;
+}
+
+.authors {
+    color: #555;
+}
+
+.year {
+    color: #777;
+    font-size: 0.9rem;
+}
+
+.notes {
+    margin-top: 12px;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+/* Button */
+.btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: #0074e0;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+}
+
+.btn:hover {
+    background: #005bb5;
+}
