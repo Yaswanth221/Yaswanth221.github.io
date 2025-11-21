@@ -6,40 +6,137 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yaswanth's PaperShelf</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Optional: Nice clean font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 
-<body>
+<body data-theme="light">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="brand">
+                <div class="brand-logo">Y</div>
+                <div class="brand-text">
+                    <div class="brand-title">PaperShelf</div>
+                    <div class="brand-subtitle">by Yaswanth</div>
+                </div>
+            </div>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                🌙
+            </button>
+        </div>
 
-    <header>
-        <h1>📚 Yaswanth's PaperShelf</h1>
-        <p>A curated list of papers I am reading and learning from.</p>
-    </header>
+        <nav class="sidebar-nav">
+            <a href="#home" class="nav-link active">Home</a>
+            <a href="#papers" class="nav-link">Papers</a>
+            <a href="#about" class="nav-link">About</a>
+        </nav>
 
-    <div id="papers-container" class="grid"></div>
+        <div class="sidebar-footer">
+            <span class="sidebar-caption">Reading to understand the world, one paper at a time.</span>
+        </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="main">
+        <!-- Hero / Home section -->
+        <section id="home" class="section hero">
+            <h1>📚 Yaswanth's PaperShelf</h1>
+            <p class="hero-subtitle">
+                Reading to understand the world, one paper at a time.
+            </p>
+        </section>
+
+        <!-- Papers section -->
+        <section id="papers" class="section">
+            <div class="section-header">
+                <h2>Papers</h2>
+                <p class="section-description">
+                    A growing shelf of papers I’m exploring and learning from.
+                </p>
+            </div>
+            <div id="papers-container" class="grid"></div>
+        </section>
+
+        <!-- About section -->
+        <section id="about" class="section">
+            <div class="section-header">
+                <h2>About</h2>
+            </div>
+            <p class="about-text">
+                Hi, I’m Yaswanth 👋 I’m curious about how systems, software, and AI work.
+                This PaperShelf is my public notebook of papers I read, revisit, and learn from over time.
+            </p>
+        </section>
+    </main>
 
     <script>
+        // -------- Load papers from papers.json --------
         async function loadPapers() {
-            const res = await fetch("papers.json");
-            const papers = await res.json();
+            try {
+                const res = await fetch("papers.json");
+                const papers = await res.json();
 
-            let html = "";
-            papers.forEach(p => {
-                html += `
-        <div class="paper-card">
-            <h2>${p.title}</h2>
-            <p class="authors">${p.authors}</p>
-            <p class="year">${p.year}</p>
-            <a class="btn" href="${p.link}" target="_blank">Read Paper</a>
-            <p class="notes">${p.notes}</p>
-        </div>`;
-            });
+                let html = "";
+                papers.forEach(p => {
+                    html += `
+                    <article class="paper-card">
+                        <h3 class="paper-title">${p.title}</h3>
+                        <p class="paper-authors">${p.authors}</p>
+                        <p class="paper-meta">${p.year}</p>
+                        <a class="btn" href="${p.link}" target="_blank" rel="noopener noreferrer">
+                            Read paper
+                        </a>
+                        ${p.notes ? `<p class="paper-notes">${p.notes}</p>` : ""}
+                    </article>`;
+                });
 
-            document.getElementById("papers-container").innerHTML = html;
+                document.getElementById("papers-container").innerHTML = html;
+            } catch (err) {
+                console.error("Error loading papers.json", err);
+                document.getElementById("papers-container").innerHTML =
+                    "<p>Could not load papers yet. Check papers.json.</p>";
+            }
         }
 
+        // -------- Theme toggle (light / dark) --------
+        const body = document.body;
+        const themeToggleBtn = document.getElementById("theme-toggle");
+
+        function setTheme(theme) {
+            body.setAttribute("data-theme", theme);
+            if (theme === "dark") {
+                themeToggleBtn.textContent = "☀️";
+            } else {
+                themeToggleBtn.textContent = "🌙";
+            }
+            localStorage.setItem("papershelf-theme", theme);
+        }
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem("papershelf-theme") || "light";
+        setTheme(savedTheme);
+
+        themeToggleBtn.addEventListener("click", () => {
+            const current = body.getAttribute("data-theme");
+            const next = current === "light" ? "dark" : "light";
+            setTheme(next);
+        });
+
+        // -------- Simple nav active state --------
+        const navLinks = document.querySelectorAll(".nav-link");
+        navLinks.forEach(link => {
+            link.addEventListener("click", () => {
+                navLinks.forEach(l => l.classList.remove("active"));
+                link.classList.add("active");
+            });
+        });
+
+        // Init
         loadPapers();
     </script>
-
 </body>
 
 </html>
